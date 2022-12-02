@@ -4,5 +4,7 @@
 
 Architecture: UNET
 
+Class: ['Salt', 'Sediment']
+
 Language: Python
 

@@ -6,5 +6,3 @@ Architecture: UNET
 
 Language: Python
 
-
-This is ok

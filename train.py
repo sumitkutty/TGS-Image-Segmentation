@@ -5,7 +5,8 @@ from dataset import segmentationdataset
 from options import *
 from main_network import UNET
 
-
+from warnings import filterwarnings as W
+W('ignore')
 # Training Packages
 
 import matplotlib.pyplot as plt
@@ -79,33 +80,37 @@ def main():
 
     print('Training Started')
     start = time.perf_counter()
-    
+    i = 0
     # TRAINING EPOCHS ---------------------------------------------------------------->
-    for e in tqdm(range(num_epochs)):
+    for e in range(num_epochs):
         model.train()
         total_train_loss = 0
         total_test_loss = 0
         
-        
-        for (i, (imgs, masks)) in enumerate(train_DL):
+        # Train Loop=========================
+        for (imgs, masks) in tqdm(train_DL):
             imgs = imgs.to(device)
             masks = masks.to(device)
             
             preds = model(imgs)
             loss = criterion(preds, masks)
             
+            #'''
             if i==0:
                 print(f'Batch size is : {batch_size}')
                 print(f"pred shape: {preds.shape}")
-                print("       Batches * Channels * H * W")
-                
+                print("                       Batches * Channels * H * W")
+                i = 1
+            #''' 
                 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
             
             total_train_loss += loss
+            # Test Loop =======================
             with torch.no_grad():
+                print("Testing Started")
                 model.eval()
                 
                 for (imgs, masks) in test_DL:
@@ -114,8 +119,12 @@ def main():
                     
                     preds = model(imgs)
                     total_test_loss += criterion(preds, masks)
-                    
-        #Here one epoch ends:
+            # End Test Loop=====================       
+             
+        #End of Epoch
+        
+        #Calculate Batch Metrics
+        #=====================
         avg_train_loss = total_train_loss/train_steps_per_epoch
         avg_test_loss = total_test_loss/test_steps_per_epoch
         
@@ -123,9 +132,9 @@ def main():
         History["test_loss"].append(avg_test_loss.cpu().detach().numpy())
         
         #Progress print
-        print(f"EPOCH: {i+1}/{num_epochs}")
+        print(f"EPOCH: {e+1}/{num_epochs}")
         print(f"Train Loss: {avg_train_loss:.5f},  Test Loss: {avg_test_loss:.5f}")
-        
+        #======================
     #Here all epochs done    
     total_time = time.perf_counter() - start
     print(f"TOTAL TRAINING TIME: {f'{total_time/3600:.2f} Hours' if total_time>3600 else f'{total_time/60:.2f} Mins'}")        

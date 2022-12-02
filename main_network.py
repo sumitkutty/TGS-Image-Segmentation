@@ -18,7 +18,7 @@ class UNET(Module):
         #in_channels = last layer's channel_no, i.e 16
         #out_channels = no of classes . i.e 1
         
-        self.head = Conv2d(in_channels = dec_channels, out_channels = 1, kernel_size=1)
+        self.head = Conv2d(in_channels = dec_channels[-1], out_channels = 1, kernel_size=1)
         self.retain_Dim = retain_Dim
         self.outsize = outsize
         

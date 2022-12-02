@@ -68,7 +68,7 @@ class Decoder(Module):
 
 
     def forward(self, x, encFeatures):
-        for i in range(len(self.upconv)): #Goes from 0,1,2
+        for i in range(len(self.upconv_blocks)): #Goes from 0,1,2
             x = self.upconv_blocks[i](x)
 
             encFeat = self.crop(x , encFeatures[i])

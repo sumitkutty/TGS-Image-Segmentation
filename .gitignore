@@ -1,2 +1,8 @@
+__pycache__/
 .DS_Store
 trial.ipynb
+trial.py
+
+
+#Folders
+output/

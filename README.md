@@ -13,11 +13,3 @@ Class: ['Salt', 'Sediment']
 
 Language: Python
 
-
-Hiiiiiii
-
-this
-
-is 
-
-sumit

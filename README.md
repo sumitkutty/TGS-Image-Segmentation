@@ -5,14 +5,14 @@
 
 #### The project aims to build an algorithm that automatically and accurately identifies if a subsurface target is salt or not.
 
-Dataset: https://www.kaggle.com/c/tgs-salt-identification-challenge
+#### **Dataset**: https://www.kaggle.com/c/tgs-salt-identification-challenge
 * Total Input Images: 4000
 * Total Binary Mask Images: 4000
 
-Architecture: UNET
+#### **Architecture**: UNET
 
-Class: ['Salt', 'Sediment']
+#### **Classes**: ['Salt', 'Sediment']
 
-Language: Python
-Framework: Pytorch
+#### **Language**: Python
+#### **Framework**: Pytorch
 
